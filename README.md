@@ -18,5 +18,5 @@ mykey.pem key location
 /etc/mykey.pem
 
 wherver you put your key run this cmd
-cd /etc/
+cd /etc/                   
 chmod +X mykey.pem
