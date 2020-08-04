@@ -1,0 +1,34 @@
+- hosts: web
+  tasks:
+
+  - name:  updating apt-get
+    command: apt-get update
+    become: true
+
+  - name: install docker
+    package:
+     name: 'docker.io'
+     state: present
+    become: true
+
+  - name: Ensure the docker service is running
+    service:
+      name: 'docker'
+      state: started
+    become: true
+  - name: Create a /folder  directory
+    file:
+      path: /folder
+      state: directory
+      mode: '0755'
+    become: true
+
+  - name: Starting httpd docker container
+    command: docker container run -dit -p 80:80 -v /folder:/usr/local/apache2/htdocs/ httpd
+    become: true
+
+  - name: Copy files
+    copy:
+      src: /index.html
+      dest: /folder/
+    become: true
